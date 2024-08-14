@@ -1,0 +1,32 @@
+@startuml
+title Una moto choca con un piquete y es penalizado con 2 movimientos
+
+Actor usuario
+
+"usuario" -> ":Jugador": mover(direccion, escenario)
+":Jugador" -> ":Moto": mover(direccion, posicion)
+":Moto" -> ":Direccion": calcularNuevaPosicion(posicion)
+":Direccion" -> ":Posicion": sumarX(dirX)
+":Direccion" -> ":Posicion": sumarY(dirY)
+":Direccion" --> ":Moto": nuevaPosicion
+":Moto" --> ":Jugador": nuevaPosicion
+":Jugador" -> ":Puntaje": sumarMovimientos(1)
+":Jugador" -> ":Jugador": chocarObstaculos()
+":Jugador" -> ":Escenario": obtenerChocable(nuevaPosicion)
+":Escenario" --> ":Jugador": unPiquete
+":Jugador" -> ":Moto": chocar(unPiquete)
+":Moto" -> ":Piquete": devolverEfecto(self)
+create ":Penalizacion"
+":Piquete" --> ":Penalizacion": <<create>>
+":Piquete" --> ":Moto" : unaPenalizacion
+":Moto" --> ":Jugador" : unaPenalizacion
+":Jugador" -> ":Penalizacion" : aplicarEfecto(self)
+":Penalizacion" -> ":Jugador" : recibirPenalizacion(2)
+":Jugador" -> ":Puntaje" : sumarMovimientos(2)
+
+"usuario" -> ":Jugador": puntaje()
+":Jugador" -> ":Puntaje": verMovimientos()
+return 3
+":Jugador" --> "usuario" : 3
+
+@enduml

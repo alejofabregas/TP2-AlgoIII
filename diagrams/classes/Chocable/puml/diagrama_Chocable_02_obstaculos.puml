@@ -1,0 +1,44 @@
+@startuml
+
+interface Chocable {
+    + devolverEfecto(moto) : IEfecto
+    + devolverEfecto(auto) : IEfecto
+    + devolverEfecto(todoterreno) : IEfecto
+}
+
+class Pozo {
+    +  devolverEfecto(moto) : IEfecto
+    +  devolverEfecto(auto) : IEfecto
+    +  devolverEfecto(todoterreno) : IEfecto
+}
+
+class Vacio {
+    +  devolverEfecto(moto) : IEfecto
+    +  devolverEfecto(auto) : IEfecto
+    +  devolverEfecto(todoterreno) : IEfecto
+}
+
+class Piquete {
+    +  devolverEfecto(moto) : IEfecto
+    +  devolverEfecto(auto) : IEfecto
+    +  devolverEfecto(todoterreno) : IEfecto
+}
+
+class ControlPolicial {
+    -  PROBABILIDAD_MOTO : Double
+    -  PROBABILIDAD_AUTO : Double
+    -  PROBABILIDAD_TODOTERRENO : Double
+    -  PENALIZACION : int
+    -  randomizador : Randomizer
+    +  ControlPolicial(randomizer)
+    +  devolverEfecto(moto) : IEfecto
+    +  devolverEfecto(auto) : IEfecto
+    +  devolverEfecto(todoterreno) : IEfecto
+}
+
+Chocable <|.. Pozo
+Chocable <|.. Piquete
+Chocable <|.up. Vacio
+ControlPolicial ..|> Chocable
+
+@enduml

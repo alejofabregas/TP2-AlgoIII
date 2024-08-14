@@ -1,0 +1,31 @@
+@startuml
+title Un vehículo atraviesa la ciudad y encuentra una sorpresa favorable.
+Actor usuario
+
+"usuario" -> ":Jugador": mover(direccion, escenario)
+":Jugador" -> "Vehiculo": mover(direccion, posicion)
+"Vehiculo" -> ":Direccion": calcularNuevaPosicion(posicion)
+":Direccion" -> ":Posicion": sumarX(dirX)
+":Direccion" -> ":Posicion": sumarY(dirY)
+":Direccion" --> "Vehiculo": nuevaPosicion
+"Vehiculo" --> ":Jugador": nuevaPosicion
+":Jugador" -> ":Puntaje": sumarMovimientos(1)
+":Jugador" -> ":Jugador": chocarObstaculos()
+":Jugador" -> ":Escenario": obtenerChocable(nuevaPosicion)
+":Escenario" --> ":Jugador": unaSorpresaFavorable
+":Jugador" -> "Vehiculo": chocar(unaSorpresaFavorable)
+"Vehiculo" -> ":SorpresaFavorable": devolverEfecto(self)
+create ":Porcentaje"
+":SorpresaFavorable" --> ":Porcentaje": <<create>>
+":SorpresaFavorable" --> "Vehiculo" : unPorcentaje
+"Vehiculo" --> ":Jugador" : unPorcentaje
+":Jugador" -> ":Porcentaje" : aplicarEfecto(self)
+":Porcentaje" -> ":Jugador" : recibirPorcentaje(-20)
+":Jugador" -> ":Puntaje" : aplicarPorcentaje(-20)
+
+"usuario" -> ":Jugador": puntaje()
+":Jugador" -> ":Puntaje": verMovimientos()
+return 0.8
+":Jugador" --> "usuario" : 0.8
+
+@enduml

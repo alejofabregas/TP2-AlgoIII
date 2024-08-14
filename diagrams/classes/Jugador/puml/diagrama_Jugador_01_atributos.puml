@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Jugador {
+    - estado : IEstado
+    - nombre : string
+    - posicion : Posicion
+    - posicionAnterior : Posicion
+    - Escenario
+    + Jugador(vehiculo, nombre)
+    + mover(direccion)
+    - chocarObstaculos()
+    + recibirPenalizacion(penalizacion: int)
+    + recibirPorcentaje(porcentaje: int)
+    + cambiarVehiculo(nuevoVehiculo : Vehiculo)
+    + retrocederPosicionAnterior()
+    + dejarDeJugar()
+    + puedeSeguirJugando()
+}
+
+abstract class Vehiculo {
+    + mover(unaDireccion, unaPosicion) : Posicion
+    + chocar(chocable) : IEfecto
+}
+
+class Puntaje {
+    - movimientos : double
+    + verMovimientos() : double
+    + sumarMovimientos(cantMovimientos: int)
+    + aplicarPorcentaje(porcentaje: double)
+}
+
+Jugador -> Puntaje 
+Jugador --> Vehiculo
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+title Una 4x4 choca con una sorpresa cambio de vehículo y luego con un piquete.
+Actor usuario
+
+"usuario" -> ":Jugador": mover(direccion, escenario)
+":Jugador" -> ":Todoterreno": mover(direccion, posicion)
+":Todoterreno" -> ":Direccion": calcularNuevaPosicion(posicion)
+":Direccion" -> ":Posicion": sumarX(dirX)
+":Direccion" -> ":Posicion": sumarY(dirY)
+":Direccion" --> ":Todoterreno": nuevaPosicion
+":Todoterreno" --> ":Jugador": nuevaPosicion
+":Jugador" -> ":Puntaje": sumarMovimientos(1)
+":Jugador" -> ":Jugador": chocarObstaculos()
+":Jugador" -> ":Escenario": obtenerChocable(nuevaPosicion)
+":Escenario" --> ":Jugador": unaSorpresaCambioVehiculo
+":Jugador" -> ":Todoterreno": chocar(unaSorpresaCambioVehiculo)
+":Todoterreno" -> ":SopresaCambioVehiculo": devolverEfecto(self)
+create ":CambioDeVehiculo"
+":SopresaCambioVehiculo" --> ":CambioDeVehiculo": <<create>>
+":SopresaCambioVehiculo" --> ":Todoterreno" : unCambioDeVehiculo
+":Todoterreno" --> ":Jugador" : unCambioDeVehiculo
+":Jugador" -> ":CambioDeVehiculo" : aplicarEfecto(self)
+create ":Moto"
+":CambioDeVehiculo" --> ":Moto": <<create>>
+":CambioDeVehiculo" -> ":Jugador" : cambiarVehiculo(unaMoto)
+
+"usuario" -> ":Jugador": mover(direccion, escenario)
+":Jugador" -> ":Moto": mover(direccion, posicion)
+":Moto" -> ":Direccion": calcularNuevaPosicion(posicion)
+":Direccion" -> ":Posicion": sumarX(dirX)
+":Direccion" -> ":Posicion": sumarY(dirY)
+":Direccion" --> ":Moto": nuevaPosicion
+":Moto" --> ":Jugador": nuevaPosicion
+":Jugador" -> ":Puntaje": sumarMovimientos(1)
+":Jugador" -> ":Jugador": chocarObstaculos()
+":Jugador" -> ":Escenario": obtenerChocable(nuevaPosicion)
+":Escenario" --> ":Jugador": unPiquete
+":Jugador" -> ":Moto": chocar(unPiquete)
+":Moto" -> ":Piquete": devolverEfecto(self)
+create ":Penalizacion"
+":Piquete" --> ":Penalizacion": <<create>>
+":Piquete" --> ":Moto" : unaPenalizacion
+":Moto" --> ":Jugador" : unaPenalizacion
+":Jugador" -> ":Penalizacion" : aplicarEfecto(self)
+":Penalizacion" -> ":Jugador" : recibirPenalizacion(2)
+":Jugador" -> ":Puntaje" : sumarMovimientos(2)
+
+"usuario" -> ":Jugador": puntaje()
+":Jugador" -> ":Puntaje": verMovimientos()
+return 4
+":Jugador" --> "usuario" : 4
+
+@enduml

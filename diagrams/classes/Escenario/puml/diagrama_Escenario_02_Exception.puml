@@ -1,0 +1,27 @@
+@startuml
+
+class Escenario {
+    - alto : int
+    - ancho : int
+    - chocables : Chocable[][]
+    - {static} instance : Escenario
+    - Escenario(limiteAlto, limiteAncho)
+    + generarObstaculos()
+    + {static} getInstance() : Escenario
+    + {static} getInstance(alto, ancho) : Escenario
+    + contienePosicion(posicion) : Bool
+    + insertarChocable(chocable, posicion)
+    + obtenerChocable(posicion) : Chocable
+    + reset() : Escenario
+}
+
+class TamanioDelEscenarioInvalido {
+}
+
+class RuntimeException {
+}
+
+Escenario .> TamanioDelEscenarioInvalido : <<lanza>>
+TamanioDelEscenarioInvalido -|> RuntimeException
+
+@enduml

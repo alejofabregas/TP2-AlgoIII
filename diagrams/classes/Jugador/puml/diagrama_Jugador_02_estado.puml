@@ -1,0 +1,37 @@
+@startuml
+
+class Jugador {
+    - nombre : string
+    - posicion : Posicion
+    - posicionAnterior : Posicion
+    - puntaje : Puntaje
+    - vehiculo : Vehiculo
+    - Escenario
+    + Jugador(vehiculo, nombre)
+    + mover(direccion)
+    - chocarObstaculos()
+    + recibirPenalizacion(penalizacion: int)
+    + recibirPorcentaje(porcentaje: int)
+    + cambiarVehiculo(nuevoVehiculo : Vehiculo)
+    + retrocederPosicionAnterior()
+    + dejarDeJugar()
+    + puedeSeguirJugando()
+}
+
+interface IEstado {
+    + puedeSeguirJugando() : bool
+}
+
+class EstadoActivo {
+    + puedeSeguirJugando() : bool
+}
+
+class EstadoInactivo {
+    + puedeSeguirJugando() : bool
+}
+
+Jugador -> IEstado
+IEstado <|.. EstadoActivo
+IEstado <|.. EstadoInactivo
+
+@enduml
